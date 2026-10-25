@@ -1,6 +1,6 @@
 # 项目进度与接续
 
-更新日期：2026-10-23。
+更新日期：2026-10-25。
 
 ## 当前状态
 
@@ -13,7 +13,7 @@
 | 读取此前 ChatGPT gem5 专题对话 | 已完成 | [项目上下文](../project-context.md) |
 | 官方仓库、代表性源码与下载范围调研 | 已完成 | [仓库报告](../gem5-official-repo-report.md) |
 | 项目目标、协作规则和文件职责整理 | 已完成 | [README](../README.md)、[AGENTS](../AGENTS.md) |
-| 项目 Git 与 GitHub 同步范围 | 外层 Git 已初始化，默认分支为 `main`；当前 14 个项目文件可纳入同步，六个官方工作树均排除；尚未配置远端、创建提交或上传 | [版本管理范围](../README.md#版本管理范围) |
+| 项目 Git 与 GitHub 同步范围 | 外层 `main` 已提交并上传 14 个自有文件，`origin/main` 跟踪已建立；GitHub API 已独立核对首次提交；六个官方工作树、本机记录及生成物继续排除 | [版本管理范围](../README.md#版本管理范围)、[GitHub 仓库](https://github.com/niyingsong123/soc_model) |
 | 四个官方仓库及教程子模块获取 | 已完成，固定版本与完整性检查通过；保留 Windows 兼容性说明 | [上游登记](../upstream/README.md) |
 | 六个工作树用途及一、二级目录分析 | 已完成，覆盖全部 301 个目录条目，共同结构合并说明并标明适用副本 | [目录导读](../notes/gem5-repository-map.md) |
 | 两份独立计划 | 已分别保存初稿与后续建议的整合稿，并接入项目入口 | [研究计划](../plans/gem5-research-plan.md)、[工作计划](../plans/project-work-plan.md) |
@@ -35,6 +35,14 @@
 本轮完成环境搭建与验收，没有自动启动 E001 参数扫描。outstanding、简单 SoC、NoC、DMA/SDMA 等仍按工作计划接续。
 
 ## 已完成记录
+
+### 2026-10-25 项目自有文件首次同步到 GitHub
+
+按用户要求，将项目约定、上下文、研究报告、计划、笔记、实验代码及本项目编写的上游登记共 14 个文件同步到 [niyingsong123/soc_model](https://github.com/niyingsong123/soc_model)。核实远端为空仓库后，为外层 Git 配置 `origin`，创建首次提交 `98f59be270f5de2cf07dc6469b948d914ef5d56e` 并推送 `main`，建立 `origin/main` 跟踪；本地 HEAD、跟踪分支与 GitHub API 返回的远端提交一致。本条进度更新随后一并提交同步。
+
+沿用现有 `.gitignore`：六个官方工作树及其 Git 历史不上传；`.local/`、下载资源、原始运行输出、构建产物、环境和缓存继续保留在本地。未修改官方源码或启动仿真；E001 仍为已准备、尚未运行。
+
+发布前已核对全部 14 个候选文件与排除路径，162 个本地 Markdown 链接路径存在，E001 配置的 Python AST 语法及暂存内容的 `git diff --cached --check` 通过；83 个外部链接没有逐一联网检查。指向官方副本和本机记录的链接依赖本地资料，GitHub 不包含这些文件。同步检查与最终远端核对结果保存在 `.local/validation/20261025-github-sync/checks.json`；本进度旧稿与 SHA256 清单位于 `.local/backups/20261025-github-sync/`。
 
 ### 2026-10-23 当前 gem5 运行环境复核
 
