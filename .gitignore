@@ -1,0 +1,25 @@
+# Official gem5 source, documentation, tutorials and resources stay local,
+# including the Bootcamp submodules and each checkout's Git history.
+# Sync only this project's source/version registry from upstream/.
+/upstream/*
+!/upstream/README.md
+
+# Other project-authored documents, models, configs, experiments, tools and
+# patches are eligible for Git/GitHub sync unless excluded below.
+
+# Downloaded binaries, kernels, disk images and checkpoints.
+# Create this registry only when resources are actually introduced.
+/resources/*
+!/resources/README.md
+
+# Raw simulation outputs and host-specific files.
+/runs/
+/.local/
+**/m5out/
+/build/
+
+# Python environments, bytecode and notebook cache.
+/.venv/
+**/__pycache__/
+*.py[cod]
+**/.ipynb_checkpoints/
