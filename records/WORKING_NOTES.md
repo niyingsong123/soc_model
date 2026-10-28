@@ -4,7 +4,7 @@
 
 当前关注 gem5 的整体构成、主要特征及其对 SoC 性能建模的意义。研究范围按 [gem5 研究计划](../plans/gem5-research-plan.md)推进，运行和实验按独立的 [项目工作开展计划](../plans/project-work-plan.md)推进。先理解各部分的用途和联系，只选读少量关键源码；本笔记的正式文件组织仍待讨论。
 
-本文记录资料与源码阅读得到的认识，尚无编译或仿真实验结果。源码阅读快照为 gem5 `v25.1.0.1`，commit `c8222cc67a399bfc01e8658dd14b30d5bfd634f9`；现行版本与获取状态统一见 [上游登记](../upstream/README.md)。六个本地工作树的详细目录表见 [仓库目录导读](../notes/gem5-repository-map.md)。
+本文记录资料与源码阅读得到的认识，尚无编译或仿真实验结果。源码阅读快照为 gem5 `v25.1.0.1`，commit `c8222cc67a399bfc01e8658dd14b30d5bfd634f9`；现行版本与获取状态统一见 [上游登记](../gem5-official/README.md)。六个固定版本工作树的详细目录表见 [仓库目录导读](../notes/gem5-repository-map.md)。文中“本地源码”和“本地讲义”指旧电脑在整理日期的阅读副本；当前 Mac 尚未取得这些依赖，相对链接需在取得对应版本后使用。
 
 ## gem5 是怎样一种工具
 
@@ -85,7 +85,7 @@ stdlib 是 gem5 的 Python 组件与运行接口，不是另一套独立仿真�
 
 ### 简单 CPU 系统
 
-已选读 [simple.py](../upstream/gem5/configs/learning_gem5/part1/simple.py) 的配置主体。这个示例创建 System、时钟域、地址范围、X86TimingSimpleCPU、SystemXBar、MemCtrl 与 DDR3 接口，并设置一个 SE hello workload。
+已选读 [simple.py](../gem5-official/gem5/configs/learning_gem5/part1/simple.py) 的配置主体。这个示例创建 System、时钟域、地址范围、X86TimingSimpleCPU、SystemXBar、MemCtrl 与 DDR3 接口，并设置一个 SE hello workload。
 
 其主要访存连接可以概括为：
 
@@ -121,7 +121,7 @@ flowchart LR
 
 ### 不带 CPU 的内存流量系统
 
-已选读 [memory_traffic.py](../upstream/gem5/configs/example/gem5_library/memory_traffic.py) 的配置主体。它通过 `generator_factory()` 选择 LinearGenerator 或 RandomGenerator，设置读请求比例，并把流量发生器与 HBM 内存组件放入 TestBoard。
+已选读 [memory_traffic.py](../gem5-official/gem5/configs/example/gem5_library/memory_traffic.py) 的配置主体。它通过 `generator_factory()` 选择 LinearGenerator 或 RandomGenerator，设置读请求比例，并把流量发生器与 HBM 内存组件放入 TestBoard。
 
 此例设置 `cache_hierarchy=None`，由 TestBoard 直接连接流量发生器和内存，最终通过 `Simulator(board=board).run()` 启动。
 
@@ -173,13 +173,13 @@ flowchart LR
 
 | 概念 | 选读位置 | 能建立的认识 |
 | --- | --- | --- |
-| SimObject | [sim_object.hh](../upstream/gem5/src/sim/sim_object.hh)，`SimObject` 类声明 | 模型对象共享事件管理、序列化、drain、统计和命名等基础能力 |
-| EventQueue | [eventq.hh](../upstream/gem5/src/sim/eventq.hh)，`EventQueue` 类声明及说明 | 仿真通过事件队列组织待发生的动作，并维护仿真时间 |
-| Port | [port.hh](../upstream/gem5/src/mem/port.hh)，`RequestPort`、`ResponsePort` 类声明与接口说明 | 内存请求方与响应方通过端口协作，接口分别支持 Atomic、Timing、Functional 协议 |
+| SimObject | [sim_object.hh](../gem5-official/gem5/src/sim/sim_object.hh)，`SimObject` 类声明 | 模型对象共享事件管理、序列化、drain、统计和命名等基础能力 |
+| EventQueue | [eventq.hh](../gem5-official/gem5/src/sim/eventq.hh)，`EventQueue` 类声明及说明 | 仿真通过事件队列组织待发生的动作，并维护仿真时间 |
+| Port | [port.hh](../gem5-official/gem5/src/mem/port.hh)，`RequestPort`、`ResponsePort` 类声明与接口说明 | 内存请求方与响应方通过端口协作，接口分别支持 Atomic、Timing、Functional 协议 |
 
 这三个概念分别帮助理解“对象怎样组织、时间怎样推进、请求怎样通信”。它们与具体 CPU、Cache 或 DMA 算法不是同一层次，适合作为理解各模型之前的公共概念。
 
-官网内存文档的部分段落仍使用旧接口术语；本地固定版本的端口命名以此处源码为准。具体 retry、Packet 生命周期、事件顺序等细节尚未在本轮展开。
+官网内存文档的部分段落仍使用旧接口术语；上述固定版本的端口命名以此处源码为准。具体 retry、Packet 生命周期、事件顺序等细节尚未在本轮展开。
 
 ## 对 SoC 和 SDMA 学习的初步判断
 
@@ -198,17 +198,17 @@ flowchart LR
 
 记录日期：2026-10-12。用途：保留未来开展 UTCL2 建模时的参考入口。状态：**已做源码检索与局部阅读，未建立本项目的 UTCL2 模型，也未运行相关仿真。** 本记录不改变当前工作计划的先后顺序。
 
-核对快照为官方 `gem5/gem5` 的 `v25.1.0.1`，commit `c8222cc67a399bfc01e8658dd14b30d5bfd634f9`；现行版本仍以 [上游登记](../upstream/README.md) 为准。对该 checkout 的 Git 跟踪文件检索 `UTCL2`、`UTC_L2` 等名称，未找到独立以此命名的模型。结合 AMD GPU 相关代码阅读，可以确认：**gem5 有可用于研究 UTCL2 部分机制的组件，但不能直接将这些组件或其中的 L2 TLB 等同于目标硬件的完整 UTCL2。** 此结论限于该固定版本，不覆盖所有分支或第三方扩展。
+核对快照为官方 `gem5/gem5` 的 `v25.1.0.1`，commit `c8222cc67a399bfc01e8658dd14b30d5bfd634f9`；现行版本仍以 [上游登记](../gem5-official/README.md) 为准。对该 checkout 的 Git 跟踪文件检索 `UTCL2`、`UTC_L2` 等名称，未找到独立以此命名的模型。结合 AMD GPU 相关代码阅读，可以确认：**gem5 有可用于研究 UTCL2 部分机制的组件，但不能直接将这些组件或其中的 L2 TLB 等同于目标硬件的完整 UTCL2。** 此结论限于该固定版本，不覆盖所有分支或第三方扩展。
 
 ### 可参考的组件与源码入口
 
 | 组件或配置 | 已确认的能力 | 源码位置与本次阅读范围 |
 | --- | --- | --- |
-| `VegaGPUTLB` | 缓存地址翻译结果；可配置容量、相联度、命中/未命中延迟及 outstanding 上限 | [VegaGPUTLB.py](../upstream/gem5/src/arch/amdgpu/vega/VegaGPUTLB.py) 的类与参数声明；[tlb.cc](../upstream/gem5/src/arch/amdgpu/vega/tlb.cc) 中重点选读 `GpuTLB::translationReturn()`，未通读整个 TLB 实现 |
-| `VegaTLBCoalescer` | 翻译请求合并；提供探测速率、合并窗口、下游并发上限等参数 | [VegaGPUTLB.py](../upstream/gem5/src/arch/amdgpu/vega/VegaGPUTLB.py) 的 `VegaTLBCoalescer` 声明；[tlb_coalescer.cc](../upstream/gem5/src/arch/amdgpu/vega/tlb_coalescer.cc) 是后续实现阅读入口，本次未通读合并与仲裁算法 |
-| `VegaPagetableWalker` 与 PWC | 页表遍历及 Page Walk Cache（页表遍历缓存）；存在 Timing 与 Functional 入口 | [pagetable_walker.cc](../upstream/gem5/src/arch/amdgpu/vega/pagetable_walker.cc) 的 `startTiming()`、`startFunctional()` 入口及 PWC 相关位置；PWC 参数在 VegaGPUTLB.py，类型定义见 [page_walk_cache.hh](../upstream/gem5/src/arch/amdgpu/vega/page_walk_cache.hh)；未完成逐状态分析 |
-| GPU TLB 层级配置 | 示例连接多个 L1 TLB、共享 L2/L3 TLB 及对应 coalescer；FS 分支连接末级 walker | [GPUTLBConfig.py](../upstream/gem5/configs/common/GPUTLBConfig.py) 的 `TLB_constructor()`、`config_tlb_hierarchy()`；[GPUTLBOptions.py](../upstream/gem5/configs/common/GPUTLBOptions.py) 的层级参数 |
-| `AMDGPUVM` 的 TLB 管理入口 | 注册 GPU TLB，并通过现有入口调用各 TLB 的 `invalidateAll()` | [amdgpu_vm.cc](../upstream/gem5/src/dev/amdgpu/amdgpu_vm.cc) 的 `registerTLB()`、`invalidateTLBs()`；这是已有功能入口，不代表目标失效协议与完成时序已被建模 |
+| `VegaGPUTLB` | 缓存地址翻译结果；可配置容量、相联度、命中/未命中延迟及 outstanding 上限 | [VegaGPUTLB.py](../gem5-official/gem5/src/arch/amdgpu/vega/VegaGPUTLB.py) 的类与参数声明；[tlb.cc](../gem5-official/gem5/src/arch/amdgpu/vega/tlb.cc) 中重点选读 `GpuTLB::translationReturn()`，未通读整个 TLB 实现 |
+| `VegaTLBCoalescer` | 翻译请求合并；提供探测速率、合并窗口、下游并发上限等参数 | [VegaGPUTLB.py](../gem5-official/gem5/src/arch/amdgpu/vega/VegaGPUTLB.py) 的 `VegaTLBCoalescer` 声明；[tlb_coalescer.cc](../gem5-official/gem5/src/arch/amdgpu/vega/tlb_coalescer.cc) 是后续实现阅读入口，本次未通读合并与仲裁算法 |
+| `VegaPagetableWalker` 与 PWC | 页表遍历及 Page Walk Cache（页表遍历缓存）；存在 Timing 与 Functional 入口 | [pagetable_walker.cc](../gem5-official/gem5/src/arch/amdgpu/vega/pagetable_walker.cc) 的 `startTiming()`、`startFunctional()` 入口及 PWC 相关位置；PWC 参数在 VegaGPUTLB.py，类型定义见 [page_walk_cache.hh](../gem5-official/gem5/src/arch/amdgpu/vega/page_walk_cache.hh)；未完成逐状态分析 |
+| GPU TLB 层级配置 | 示例连接多个 L1 TLB、共享 L2/L3 TLB 及对应 coalescer；FS 分支连接末级 walker | [GPUTLBConfig.py](../gem5-official/gem5/configs/common/GPUTLBConfig.py) 的 `TLB_constructor()`、`config_tlb_hierarchy()`；[GPUTLBOptions.py](../gem5-official/gem5/configs/common/GPUTLBOptions.py) 的层级参数 |
+| `AMDGPUVM` 的 TLB 管理入口 | 注册 GPU TLB，并通过现有入口调用各 TLB 的 `invalidateAll()` | [amdgpu_vm.cc](../gem5-official/gem5/src/dev/amdgpu/amdgpu_vm.cc) 的 `registerTLB()`、`invalidateTLBs()`；这是已有功能入口，不代表目标失效协议与完成时序已被建模 |
 
 这组组件可帮助理解“翻译请求合并 → TLB 查询 → 未命中向下一级传递 → 末级未命中触发页表遍历”的流程。这里描述的是所读配置与实现的关系，不是目标 UTCL2 的硬件拓扑。
 
@@ -217,7 +217,7 @@ flowchart LR
 1. **配置层级与硬件模块的对应关系。** `GPUTLBConfig.py` 中的 L2/L3 是仿真配置中的层级名称，不能仅凭 L2 名称认定其对应目标 UTCL2 的全部功能。同一配置文件的 FS 分支构造 `VegaGPUTLB`，SE 分支构造 `X86GPUTLB`，后续分析必须明确所走分支。
 2. **存在 Timing walker，仍需核对完整时序。** 在所读 `GpuTLB::translationReturn()` 中，末级未命中先经过 `missLatency2` 配置延迟，再进入 `walker->startTiming()`。不能说这条路径只有 Functional 翻译，也不能把配置延迟或 walker 的实现直接当作目标硬件测量值。
 3. **多 VMID 行为不能默认成立。** 上述 Timing 页表遍历路径使用 `getPageTableBase(1)`。这证明该处有固定上下文的处理，不能据此假定已经完整覆盖目标的多 VMID 隔离、切换和资源共享行为；也不把这一局部观察扩大为整个 gem5 不支持任何多上下文功能。
-4. **SDMA 的地址判断含 Functional 翻译。** [sdma_engine.cc](../upstream/gem5/src/dev/amdgpu/sdma_engine.cc) 中 `SDMAEngine::getDeviceAddress()` 通过一次 Functional 翻译判断地址位于主机还是设备内存。这一步不能代表目标 UTCL2 的查询、排队、页表遍历与返回时延；未来要单独追踪 SDMA 实际请求是否经过拟研究的 Timing 翻译路径。
+4. **SDMA 的地址判断含 Functional 翻译。** [sdma_engine.cc](../gem5-official/gem5/src/dev/amdgpu/sdma_engine.cc) 中 `SDMAEngine::getDeviceAddress()` 通过一次 Functional 翻译判断地址位于主机还是设备内存。这一步不能代表目标 UTCL2 的查询、排队、页表遍历与返回时延；未来要单独追踪 SDMA 实际请求是否经过拟研究的 Timing 翻译路径。
 5. **目标特有约束需要独立依据。** TLB 容量与组织、请求合并规则、miss 并发、walker/PWC 资源、仲裁、VMID、失效完成和异常责任，均须与目标资料逐项对应。源码中存在相关类或函数，只支持参考实现层面的判断，不能替代目标规格、RTL 或硬件数据校准。
 
 ### 以后开展时的参考方向
@@ -258,10 +258,10 @@ flowchart LR
 | [Standard Library Overview](https://www.gem5.org/documentation/gem5-stdlib/overview) | components、resources、simulate 的职责说明 |
 | [Memory system](https://www.gem5.org/documentation/general_docs/memory_system/) | Port、Request、Packet 和访问方式的概念说明；旧 API 细节不直接作为当前版本结论 |
 | [Ruby Introduction](https://www.gem5.org/documentation/general_docs/ruby/) | Ruby 的组成、协议与网络的职责，以及请求处理的概览 |
-| [Bootcamp 官网](https://bootcamp.gem5.org/)与本地 [Using gem5 讲义](../upstream/gem5-bootcamp-2024/slides/02-Using-gem5/) | 官网课程入口；浏览 stdlib、CPU、Cache、Memory 讲义标题与主题范围，没有将目录浏览计为课程学习完成 |
-| 本地 [SimObject 入门讲义](../upstream/gem5-bootcamp-2024/slides/03-Developing-gem5-models/01-sim-objects-intro.md) | 浏览构建和 SimObject 相关课程主题，未完成练习 |
+| [Bootcamp 官网](https://bootcamp.gem5.org/)与本地 [Using gem5 讲义](../gem5-official/gem5-bootcamp-2024/slides/02-Using-gem5/) | 官网课程入口；浏览 stdlib、CPU、Cache、Memory 讲义标题与主题范围，没有将目录浏览计为课程学习完成 |
+| 本地 [SimObject 入门讲义](../gem5-official/gem5-bootcamp-2024/slides/03-Developing-gem5-models/01-sim-objects-intro.md) | 浏览构建和 SimObject 相关课程主题，未完成练习 |
 | 本文链接的两个配置示例 | 阅读配置主体，复核组件、连接、显式参数、输入与启动入口；补充结构图和对照说明；未运行 |
 | 本文链接的三个核心头文件 | 选读关键类声明与附近说明，未逐函数分析 |
 | 本文“UTCL2 建模参考”所列本地源码 | 固定版本名称检索、GPU TLB 参数与层级连接、Timing walker 入口、TLB 管理及 SDMA Functional 地址判断的局部核查；具体范围见该节，未运行模型 |
 
-在线资料查阅日期为 2026-10-12。本地 Bootcamp 阅读快照为 commit `3ea9b7e3598cd15e8c0ea688fa850249eab0fad5`；课程与当前 gem5 基线存在版本差异，使用具体配置和 API 时应继续核对。
+在线资料查阅日期为 2026-10-12。旧电脑上的 Bootcamp 阅读快照为 commit `3ea9b7e3598cd15e8c0ea688fa850249eab0fad5`；课程与当前 gem5 基线存在版本差异，使用具体配置和 API 时应继续核对。

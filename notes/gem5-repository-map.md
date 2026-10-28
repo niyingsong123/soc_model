@@ -1,19 +1,19 @@
-# 六个 gem5 本地仓库的用途与一、二级目录导读
+# 六个 gem5 固定版本工作树的用途与一、二级目录导读
 
-本次目录分析日期：2026-10-11。这里的“六个仓库”是**四个官方项目、六个本地工作树**：Bootcamp 额外固定了一份 gem5 和一份 gem5-resources。两份同名仓库的版本用途不同，分别保留。现行版本、获取状态和 Windows 兼容性说明统一见 [上游登记](../upstream/README.md)。
+目录分析日期：2026-10-11。这里的“六个仓库”是**四个官方项目、六个固定版本工作树**：Bootcamp 额外固定了一份 gem5 和一份 gem5-resources。两份同名仓库的版本用途不同。本文基于旧电脑上的源码副本完成；当前 Mac 尚未取得这些工作树，现行版本与获取状态统一见 [上游登记](../gem5-official/README.md)。
 
-目录按各自固定 commit 的 Git tree 核对，作用依据本地 README、构建文件、文件内容与代表性入口归纳。本文覆盖目录职责，不表示已逐个读完目录中的算法或运行过其中的示例。
+目录按各自固定 commit 的 Git tree 核对，作用依据当时的 README、构建文件、文件内容与代表性入口归纳。文中的源码相对链接是取得依赖后的阅读入口，不代表当前 Mac 上文件已存在。本文覆盖目录职责，不表示已逐个读完目录中的算法或运行过其中的示例。
 
 ## 1. 六个仓库分别负责什么
 
-| 本地工作树 | 官方来源与本次阅读快照 | 主要用途 | 与本项目的关系 | 一级 / 二级目录数 |
+| 工作树相对路径 | 官方来源与本次阅读快照 | 主要用途 | 与本项目的关系 | 一级 / 二级目录数 |
 | --- | --- | --- | --- | ---: |
-| [upstream/gem5/](../upstream/gem5/) | [gem5/gem5 @ c8222cc67a39](https://github.com/gem5/gem5/tree/c8222cc67a399bfc01e8658dd14b30d5bfd634f9) | 主实验基线：仿真器核心、CPU / 内存 / 设备模型、配置和测试。 | 建立自己的 SoC / DMA 性能模型，研究通用组件实现。 | 14 / 91 |
-| [upstream/gem5-bootcamp-2024/](../upstream/gem5-bootcamp-2024/) | [gem5bootcamp/2024 @ 3ea9b7e3598c](https://github.com/gem5bootcamp/2024/tree/3ea9b7e3598cd15e8c0ea688fa850249eab0fad5) | 课程总仓库：讲义、练习、课程网站和固定版本子模块。 | 按讲义与练习配对学习 gem5 的使用和模型开发。 | 9 / 17 |
-| [upstream/gem5-website/](../upstream/gem5-website/) | [gem5/website @ 07ebfaf9bb1a](https://github.com/gem5/website/tree/07ebfaf9bb1a0a4be2b822f3a4cf95abf20e4a4e) | 官方文档站点源码：教程、技术文档、博客、社区页面和附件。 | 查概念、接口与使用说明，并回到所用版本源码核对。 | 10 / 7 |
-| [upstream/gem5-resources/](../upstream/gem5-resources/) | [gem5/gem5-resources @ 672d04917020](https://github.com/gem5/gem5-resources/tree/672d04917020934d452b2e767e97875c34693dee) | 主资源仓库：workload 源码、kernel 配置、磁盘镜像构建配方及元数据。 | 为实验准备可定位、可复现的输入。 | 3 / 16 |
-| [upstream/gem5-bootcamp-2024/gem5/](../upstream/gem5-bootcamp-2024/gem5/) | [gem5/gem5 @ bb418d41eb6d](https://github.com/gem5/gem5/tree/bb418d41eb6d87c0a0591869097005c16420c6aa) | 课程固定的模拟器源码副本。 | 配合 Bootcamp 配置和练习；保持课程规定的版本关系。 | 12 / 88 |
-| [upstream/gem5-bootcamp-2024/gem5-resources/](../upstream/gem5-bootcamp-2024/gem5-resources/) | [gem5/gem5-resources @ 6734bb4940dd](https://github.com/gem5/gem5-resources/tree/6734bb4940dd90f3b7c0349eedeefcf3ee405938) | 课程固定的 workload / 资源源码副本。 | 配合课程示例所需的资源与构建说明。 | 3 / 31 |
+| [gem5-official/gem5/](../gem5-official/gem5/) | [gem5/gem5 @ c8222cc67a39](https://github.com/gem5/gem5/tree/c8222cc67a399bfc01e8658dd14b30d5bfd634f9) | 主实验基线：仿真器核心、CPU / 内存 / 设备模型、配置和测试。 | 建立自己的 SoC / DMA 性能模型，研究通用组件实现。 | 14 / 91 |
+| [gem5-official/gem5-bootcamp-2024/](../gem5-official/gem5-bootcamp-2024/) | [gem5bootcamp/2024 @ 3ea9b7e3598c](https://github.com/gem5bootcamp/2024/tree/3ea9b7e3598cd15e8c0ea688fa850249eab0fad5) | 课程总仓库：讲义、练习、课程网站和固定版本子模块。 | 按讲义与练习配对学习 gem5 的使用和模型开发。 | 9 / 17 |
+| [gem5-official/gem5-website/](../gem5-official/gem5-website/) | [gem5/website @ 07ebfaf9bb1a](https://github.com/gem5/website/tree/07ebfaf9bb1a0a4be2b822f3a4cf95abf20e4a4e) | 官方文档站点源码：教程、技术文档、博客、社区页面和附件。 | 查概念、接口与使用说明，并回到所用版本源码核对。 | 10 / 7 |
+| [gem5-official/gem5-resources/](../gem5-official/gem5-resources/) | [gem5/gem5-resources @ 672d04917020](https://github.com/gem5/gem5-resources/tree/672d04917020934d452b2e767e97875c34693dee) | 主资源仓库：workload 源码、kernel 配置、磁盘镜像构建配方及元数据。 | 为实验准备可定位、可复现的输入。 | 3 / 16 |
+| [gem5-official/gem5-bootcamp-2024/gem5/](../gem5-official/gem5-bootcamp-2024/gem5/) | [gem5/gem5 @ bb418d41eb6d](https://github.com/gem5/gem5/tree/bb418d41eb6d87c0a0591869097005c16420c6aa) | 课程固定的模拟器源码副本。 | 配合 Bootcamp 配置和练习；保持课程规定的版本关系。 | 12 / 88 |
+| [gem5-official/gem5-bootcamp-2024/gem5-resources/](../gem5-official/gem5-bootcamp-2024/gem5-resources/) | [gem5/gem5-resources @ 6734bb4940dd](https://github.com/gem5/gem5-resources/tree/6734bb4940dd90f3b7c0349eedeefcf3ee405938) | 课程固定的 workload / 资源源码副本。 | 配合课程示例所需的资源与构建说明。 | 3 / 31 |
 
 可以按一条工作流程理解它们：**Bootcamp 教你怎样使用和开发 → website 帮助查阅概念与接口 → gem5 组装并执行模型 → resources 提供被模型运行的程序和系统输入。** 本项目在外层维护自己的模型、配置、实验与分析。
 
@@ -21,7 +21,7 @@
 
 ## 2. 两份 gem5：仿真器与模型代码
 
-主库：[upstream/gem5/](../upstream/gem5/)；教学副本：[upstream/gem5-bootcamp-2024/gem5/](../upstream/gem5-bootcamp-2024/gem5/)。表中“主库、教学副本”表示两份都存在该目录、职责大体相同，**不表示目录内代码相同或配置可直接互换**。
+主库：[gem5-official/gem5/](../gem5-official/gem5/)；教学副本：[gem5-official/gem5-bootcamp-2024/gem5/](../gem5-official/gem5-bootcamp-2024/gem5/)。表中“主库、教学副本”表示两份都存在该目录、职责大体相同，**不表示目录内代码相同或配置可直接互换**。
 
 主库比教学副本多出的这一级别目录共有 5 个：`.vscode/`、`docs/`、`util/disk-image-validator/`、`util/gem5_bridge/`、`util/hypercall_external_signal/`。其余 100 个目录路径两份共有。
 
@@ -161,7 +161,7 @@
 
 ## 3. gem5-bootcamp-2024：课程、练习与配套版本
 
-入口：[upstream/gem5-bootcamp-2024/](../upstream/gem5-bootcamp-2024/)。建议把同一主题的 `slides/` 和 `materials/` 配对阅读：前者讲解，后者用于动手。父仓库的 README 含有旧环境描述，目录是否实际存在以此固定版本的 tree 为准。
+入口：[gem5-official/gem5-bootcamp-2024/](../gem5-official/gem5-bootcamp-2024/)。建议把同一主题的 `slides/` 和 `materials/` 配对阅读：前者讲解，后者用于动手。父仓库的 README 含有旧环境描述，目录是否实际存在以此固定版本的 tree 为准。
 
 ### 3.1 一级目录
 
@@ -203,7 +203,7 @@
 
 ## 4. gem5-website：官方文档的源文件
 
-入口：[upstream/gem5-website/](../upstream/gem5-website/)。这是 Jekyll 文档站点的源仓库，阅读技术内容优先进入 `_pages/documentation/`；只有维护网站时才需要深入模板、样式和站点构建代码。
+入口：[gem5-official/gem5-website/](../gem5-official/gem5-website/)。这是 Jekyll 文档站点的源仓库，阅读技术内容优先进入 `_pages/documentation/`；只有维护网站时才需要深入模板、样式和站点构建代码。
 
 ### 4.1 一级目录
 
@@ -236,7 +236,7 @@
 
 ## 5. 两份 gem5-resources：程序、系统镜像配方与元数据
 
-主资源仓库：[upstream/gem5-resources/](../upstream/gem5-resources/)；教学资源副本：[upstream/gem5-bootcamp-2024/gem5-resources/](../upstream/gem5-bootcamp-2024/gem5-resources/)。这里主要回答“拿什么程序、kernel 或磁盘镜像来运行”，仿真器和硬件模型实现主要在 gem5 中。克隆资源仓库不等于下载了资源目录指向的全部 binary、kernel 和 disk image；不少子目录保存的是生成这些资源的配方。
+主资源仓库：[gem5-official/gem5-resources/](../gem5-official/gem5-resources/)；教学资源副本：[gem5-official/gem5-bootcamp-2024/gem5-resources/](../gem5-official/gem5-bootcamp-2024/gem5-resources/)。这里主要回答“拿什么程序、kernel 或磁盘镜像来运行”，仿真器和硬件模型实现主要在 gem5 中。克隆资源仓库不等于下载了资源目录指向的全部 binary、kernel 和 disk image；不少子目录保存的是生成这些资源的配方。
 
 ### 5.1 两份共有的一级目录与网站二级目录
 
@@ -326,8 +326,8 @@
 | 怎样搭建并运行一个 gem5 系统 | Bootcamp 的 `slides/01-Introduction/`、`slides/02-Using-gem5/` 与对应 `materials/`；gem5 的 `configs/example/`、`src/python/` | 选择处理器、Cache / 内存、workload，识别配置、运行与统计之间的关系。 |
 | gem5 内部怎样工作 | Bootcamp 的 `03-Developing-gem5-models/`；gem5 的 `src/sim/`、`src/base/`、`src/learning_gem5/` | SimObject、事件调度、Port 交互、接纳 / 反压与完成语义。 |
 | 怎样建立简单 SoC 性能模型 | gem5 的 `src/mem/`、`src/dev/`、`configs/example/`；按需要使用 resources 小 workload | 从流量源、互连、内存建立可解释的小模型，再加入 CPU、Cache 或设备约束。 |
-| 怎样学习 DMA / SDMA | [dma_device.hh](../upstream/gem5/src/dev/dma_device.hh)、[dma_device.cc](../upstream/gem5/src/dev/dma_device.cc) 与 [AMDGPU 设备目录](../upstream/gem5/src/dev/amdgpu/) | 请求拆分、在途数量、端口反压、完成回调，以及已有 SDMA 命令处理路径。 |
-| 怎样研究 NoC 的拥塞与流控 | [Garnet](../upstream/gem5/src/mem/ruby/network/garnet/)、`configs/network/`、`configs/topologies/` 与 [synthetic traffic 配置](../upstream/gem5/configs/example/garnet_synth_traffic.py) | Router、VC、credit、Buffer 与注入率如何影响延迟和吞吐。 |
+| 怎样学习 DMA / SDMA | [dma_device.hh](../gem5-official/gem5/src/dev/dma_device.hh)、[dma_device.cc](../gem5-official/gem5/src/dev/dma_device.cc) 与 [AMDGPU 设备目录](../gem5-official/gem5/src/dev/amdgpu/) | 请求拆分、在途数量、端口反压、完成回调，以及已有 SDMA 命令处理路径。 |
+| 怎样研究 NoC 的拥塞与流控 | [Garnet](../gem5-official/gem5/src/mem/ruby/network/garnet/)、`configs/network/`、`configs/topologies/` 与 [synthetic traffic 配置](../gem5-official/gem5/configs/example/garnet_synth_traffic.py) | Router、VC、credit、Buffer 与注入率如何影响延迟和吞吐。 |
 
 gem5 的 AMDGPU SDMA 实现可作为学习和对照对象；是否适用于目标 SDMA 的性能预测，需要继续审查时间、资源、功能边界并做校准。已有初步分析见 [官方仓库报告](../gem5-official-repo-report.md)。本项目自己的模型仍放外层 `models/`，配置放外层 `configs/`，问题与结果放 `experiments/`；官方工作树内部保持原有结构。
 
@@ -335,13 +335,13 @@ gem5 的 AMDGPU SDMA 实现可作为学习和对照对象；是否适用于目�
 
 目录清单取自六个固定 commit 的 `git ls-tree`；表中的职责归纳结合对应 README、文件清单、代表性源码注释和脚本入口。主要可复查入口如下。
 
-| 内容 | 本地依据 |
+| 内容 | 阅读快照中的依据 |
 | --- | --- |
-| gem5 工程总结构 | [主库 README](../upstream/gem5/README.md)、[教学副本 README](../upstream/gem5-bootcamp-2024/gem5/README.md) |
-| 课程与子模块 | [Bootcamp README](../upstream/gem5-bootcamp-2024/README.md)、[slides README](../upstream/gem5-bootcamp-2024/slides/README.md)、[子模块声明](../upstream/gem5-bootcamp-2024/.gitmodules) |
-| website 的布局 | [website README 的 Directory Structure](../upstream/gem5-website/README.md)、[站点配置](../upstream/gem5-website/_config.yml) |
-| 两份 resources 的职责与资源构建 | [主 resources README](../upstream/gem5-resources/README.md)、[教学 resources README](../upstream/gem5-bootcamp-2024/gem5-resources/README.md) 及各 `src` 子目录 README / 构建文件 |
-| 外部模拟器依赖边界 | [DRAMSim2](../upstream/gem5/ext/dramsim2/README)、[DRAMsim3](../upstream/gem5/ext/dramsim3/README)、[DRAMSys](../upstream/gem5/ext/dramsys/README) 的接入说明 |
-| 文档生成与特殊工具 | [Sphinx 文档入口](../upstream/gem5/docs/README)、[共享内存客户端](../upstream/gem5/util/mem/shared_memory_client.hh)、[外部控制脚本](../upstream/gem5/util/hypercall_external_signal/orchestrator_request.py) |
+| gem5 工程总结构 | [主库 README](../gem5-official/gem5/README.md)、[教学副本 README](../gem5-official/gem5-bootcamp-2024/gem5/README.md) |
+| 课程与子模块 | [Bootcamp README](../gem5-official/gem5-bootcamp-2024/README.md)、[slides README](../gem5-official/gem5-bootcamp-2024/slides/README.md)、[子模块声明](../gem5-official/gem5-bootcamp-2024/.gitmodules) |
+| website 的布局 | [website README 的 Directory Structure](../gem5-official/gem5-website/README.md)、[站点配置](../gem5-official/gem5-website/_config.yml) |
+| 两份 resources 的职责与资源构建 | [主 resources README](../gem5-official/gem5-resources/README.md)、[教学 resources README](../gem5-official/gem5-bootcamp-2024/gem5-resources/README.md) 及各 `src` 子目录 README / 构建文件 |
+| 外部模拟器依赖边界 | [DRAMSim2](../gem5-official/gem5/ext/dramsim2/README)、[DRAMsim3](../gem5-official/gem5/ext/dramsim3/README)、[DRAMSys](../gem5-official/gem5/ext/dramsys/README) 的接入说明 |
+| 文档生成与特殊工具 | [Sphinx 文档入口](../gem5-official/gem5/docs/README)、[共享内存客户端](../gem5-official/gem5/util/mem/shared_memory_client.hh)、[外部控制脚本](../gem5-official/gem5/util/hypercall_external_signal/orchestrator_request.py) |
 
 按适用副本展开后，本表覆盖六份工作树全部 301 个一、二级目录条目。这里的核对针对目录清单与文档定位，未执行编译、课程练习或仿真实验。

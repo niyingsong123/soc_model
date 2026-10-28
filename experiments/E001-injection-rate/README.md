@@ -1,6 +1,6 @@
 # E001：请求注入率与完成吞吐
 
-准备日期：2026-10-12；环境状态更新：2026-10-20。状态：**配置和测量方法已准备，E001 参数扫描尚未运行，没有本实验实测结果。** 本机 WSL2、Ubuntu、gem5 X86 构建及官方示例验收已完成；启动方式、构建选项和证据见 [本机环境](../../.local/environment.md)。
+准备日期：2026-10-12；环境状态更新：2026-10-28。状态：**配置和测量方法已准备，E001 参数扫描尚未运行，没有本实验实测结果。** 当前 Mac 尚未安装 gem5 环境，运行前需取得固定版本源码、完成构建与官方示例验收；依赖获取状态见 [上游登记](../../gem5-official/README.md)。
 
 本实验落实 [项目工作开展计划](../../plans/project-work-plan.md) 的首个性能问题。实验记录和验证要求遵循 [实验工作方法](../../methods/experiment-workflow.md)。
 
@@ -10,7 +10,7 @@
 
 使用官方已有组件：单个 `LinearGenerator` → `SingleChannelSimpleMemory`，通过 `TestBoard(cache_hierarchy=None)` 直接连接。没有 CPU、Cache、真实应用、DMA 读写依赖或 OS；该实验只解释受控读流量下的服务能力，不能用于预测目标 DRAM 或 SDMA 性能。
 
-配置入口为 [config.py](config.py)。唯一扫描参数是 `--rate`；其余参数在本实验中固定。上游来源以 [上游登记](../../upstream/README.md) 为准，本次接口与统计阅读快照为 gem5 commit `c8222cc67a399bfc01e8658dd14b30d5bfd634f9`，2026-10-12 核对主工作树未有改动。
+配置入口为 [config.py](config.py)。唯一扫描参数是 `--rate`；其余参数在本实验中固定。上游来源以 [上游登记](../../gem5-official/README.md) 为准，接口与统计阅读快照为 gem5 commit `c8222cc67a399bfc01e8658dd14b30d5bfd634f9`，来自 2026-10-12 在旧电脑上的源码核查，不代表当前 Mac 已有该源码工作树。
 
 | 参数 | 固定设置或扫描值 | 原因 |
 | --- | --- | --- |
@@ -53,24 +53,24 @@
 
 无 warm-up 与 drain 的选择仅用于这个短小、无 Cache 的机制实验。报告全部有限窗口效应；必要时另开运行延长时长或检查尾部响应，不覆盖原结果。确定性首轮不机械重复多次。
 
-## 已就绪环境与下一次运行入口
+## 运行前准备与命令示例
 
-本机已构建 `X86/gem5.opt`，使用 `--without-tcmalloc -j 4`。重建须保留该分配器选项；原因与本机环境事实统一记录在 [本机环境](../../.local/environment.md)。
+当前电脑尚无可用的 gem5 可执行文件。运行前应按固定版本取得源码，准备实际执行环境所需依赖，选择构建目标与并行度，再完成官方 `simple.py` 和 `memory_traffic.py LinearGenerator 100` 等基础检查。构建选项须在实际运行电脑上验证，不能直接继承旧电脑的分配器选项或并行度。
 
-Linux 文件系统中的固定 commit 干净源码 checkout、依赖安装、构建，以及官方 `simple.py` 与 `memory_traffic.py LinearGenerator 100` 检查均已完成。环境诊断另运行过一个独立的 SimpleMemory 检查；这些结果保存于 `environment-check`，不替代本实验四档参数扫描和统计分析。
+实际环境、源码与二进制身份以及验收结果在执行电脑的 `.local/environment.md` 中登记。环境验收不替代本实验四档参数扫描和统计分析。
 
-下面是**未执行**的单次实验命令，变量应按实际环境设置；配置脚本可从 Windows 项目读取，源码构建与原始运行目录放 Linux 文件系统。每次用新目录，禁止复用已产生结果的 run ID。
+下面是环境就绪后使用的 **Linux/Bash 命令示例，尚未执行**。路径均为占位，使用前替换为实际项目目录和已验收的 gem5 可执行文件；每次用新目录，禁止复用已产生结果的 run ID。
 
 ```bash
-SOC_MODEL_ROOT=/mnt/e/codex/soc_model
-GEM5_ROOT="$HOME/soc_model/upstream/gem5"
-SOC_MODEL_RUNS="$HOME/soc_model/runs"
+SOC_MODEL_ROOT="/absolute/path/to/soc_model"
+SOC_MODEL_GEM5_BIN="/absolute/path/to/gem5.opt"
+SOC_MODEL_RUNS="$SOC_MODEL_ROOT/runs"
 SOC_MODEL_RATE=0.25GiB/s
 SOC_MODEL_RUN_ID="$(date +%Y%m%dT%H%M%S%N%z)-rate-${SOC_MODEL_RATE%GiB/s}"
 SOC_MODEL_OUTDIR="$SOC_MODEL_RUNS/E001-injection-rate/$SOC_MODEL_RUN_ID"
 mkdir -p "$SOC_MODEL_RUNS/E001-injection-rate"
 mkdir "$SOC_MODEL_OUTDIR"
-"$GEM5_ROOT/build/X86/gem5.opt" \
+"$SOC_MODEL_GEM5_BIN" \
   --outdir="$SOC_MODEL_OUTDIR" \
   "$SOC_MODEL_ROOT/experiments/E001-injection-rate/config.py" \
   --rate="$SOC_MODEL_RATE" \
@@ -83,16 +83,16 @@ printf '%s\n' "$SOC_MODEL_EXIT_CODE" >"$SOC_MODEL_OUTDIR/exit-code.txt"
 
 ## 实际阅读依据
 
-以下均为上述 gem5 commit 的局部阅读，不表示已通读模块。
+以下均为上述 gem5 commit 在旧电脑上的局部阅读，不表示已通读模块。源码相对链接是取得依赖后的阅读入口，当前 Mac 尚无这些文件。
 
 | 源码位置 | 本次实际核对的行为 |
 | --- | --- |
-| [memory/simple.py](../../upstream/gem5/src/python/gem5/components/memory/simple.py)，`SingleChannelSimpleMemory.__init__()`、`set_memory_range()` | SimpleMemory 参数接口及单段地址范围 |
-| [linear_generator.py](../../upstream/gem5/src/python/gem5/components/processors/linear_generator.py)、[linear_generator_core.py](../../upstream/gem5/src/python/gem5/components/processors/linear_generator_core.py)，构造与 `_create_traffic()` | 请求大小、速率、地址范围和生成时长的设置；线性流量后进入 exit 状态 |
-| [test_board.py](../../upstream/gem5/src/python/gem5/components/boards/test_board.py)，`_connect_things()` | 无 Cache 时单发生器与单内存端口直连 |
-| [BaseTrafficGen.py](../../upstream/gem5/src/cpu/testers/traffic_gen/BaseTrafficGen.py)，参数声明 | outstanding=0 与 elastic_req 的含义 |
-| [base.cc](../../upstream/gem5/src/cpu/testers/traffic_gen/base.cc)，`update()`、`retryReq()`、`StatGroup`、`recvTimingResp()` | 生成与完成计数的区别、反压与统计公式 |
-| [base.hh](../../upstream/gem5/src/cpu/testers/traffic_gen/base.hh)，`allocateWaitingRespSlot()` | 首次尝试发送前登记延迟计时起点，不能将平均延迟解释为纯内存延迟 |
-| [simple_mem.cc](../../upstream/gem5/src/mem/simple_mem.cc)，`recvTimingReq()`、`release()`、`dequeue()` | 忙时拒绝与 retry、带宽控制接纳间隔、安排响应 |
-| [abstract_mem.cc](../../upstream/gem5/src/mem/abstract_mem.cc)，`MemStats::regStats()`、`access()` | 内存侧读请求与字节数计数及 total 向量输出 |
-| [exit_gen.cc](../../upstream/gem5/src/cpu/testers/traffic_gen/exit_gen.cc)，`ExitGen::enter()` | 请求结束仿真，不在此处等待所有返回 |
+| [memory/simple.py](../../gem5-official/gem5/src/python/gem5/components/memory/simple.py)，`SingleChannelSimpleMemory.__init__()`、`set_memory_range()` | SimpleMemory 参数接口及单段地址范围 |
+| [linear_generator.py](../../gem5-official/gem5/src/python/gem5/components/processors/linear_generator.py)、[linear_generator_core.py](../../gem5-official/gem5/src/python/gem5/components/processors/linear_generator_core.py)，构造与 `_create_traffic()` | 请求大小、速率、地址范围和生成时长的设置；线性流量后进入 exit 状态 |
+| [test_board.py](../../gem5-official/gem5/src/python/gem5/components/boards/test_board.py)，`_connect_things()` | 无 Cache 时单发生器与单内存端口直连 |
+| [BaseTrafficGen.py](../../gem5-official/gem5/src/cpu/testers/traffic_gen/BaseTrafficGen.py)，参数声明 | outstanding=0 与 elastic_req 的含义 |
+| [base.cc](../../gem5-official/gem5/src/cpu/testers/traffic_gen/base.cc)，`update()`、`retryReq()`、`StatGroup`、`recvTimingResp()` | 生成与完成计数的区别、反压与统计公式 |
+| [base.hh](../../gem5-official/gem5/src/cpu/testers/traffic_gen/base.hh)，`allocateWaitingRespSlot()` | 首次尝试发送前登记延迟计时起点，不能将平均延迟解释为纯内存延迟 |
+| [simple_mem.cc](../../gem5-official/gem5/src/mem/simple_mem.cc)，`recvTimingReq()`、`release()`、`dequeue()` | 忙时拒绝与 retry、带宽控制接纳间隔、安排响应 |
+| [abstract_mem.cc](../../gem5-official/gem5/src/mem/abstract_mem.cc)，`MemStats::regStats()`、`access()` | 内存侧读请求与字节数计数及 total 向量输出 |
+| [exit_gen.cc](../../gem5-official/gem5/src/cpu/testers/traffic_gen/exit_gen.cc)，`ExitGen::enter()` | 请求结束仿真，不在此处等待所有返回 |

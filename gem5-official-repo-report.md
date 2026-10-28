@@ -2,7 +2,7 @@
 
 核对日期：2026-10-11，北京时间。面向项目：`soc_model`。
 
-本报告保留调研时的说明和建议。后续采用的项目目标与路线由 [项目上下文](project-context.md)维护，当前目录职责见 [项目入口](README.md)，选定版本与获取状态见 [上游登记](upstream/README.md)，实际进展见 [进度记录](records/PROGRESS.md)。本报告中的目录与命令建议不作为已实施状态。
+本报告保留调研时的说明和建议。后续采用的项目目标与路线由 [项目上下文](project-context.md)维护，当前目录职责见 [项目入口](README.md)，选定版本与获取状态见 [上游登记](gem5-official/README.md)，实际进展见 [进度记录](records/PROGRESS.md)。本报告中的目录与命令建议不作为已实施状态，也不表示当前 Mac 已安装 gem5 环境。项目内路径已按 2026-10-28 确定的 `gem5-official/` 名称更新，技术调研范围仍为上述核对日期。
 
 **建议以官方 `gem5/gem5` 的固定 release 作为实验底座，完整保留该版本源码，按问题学习其中的模块。第一批配套资料选择 Bootcamp 2024 和官网文档；workload、内核、磁盘镜像按实验逐项获取。** 学习顺序采用“工具入门 → 通用模块与仿真原理 → 简单 SoC 实验 → SDMA 性能模型 → 更大的 SoC”。
 
@@ -214,7 +214,7 @@ flowchart LR
 ```text
 soc_model/
   gem5-official-repo-report.md
-  upstream/
+  gem5-official/
     gem5/
     gem5-bootcamp-2024/
     gem5-website/
@@ -228,14 +228,14 @@ soc_model/
 
 该目录结构是后续实施建议。上游源码采用独立 Git checkout 或明确的版本锁定方式；本项目自己的 Git 管理不应无意中重复纳入整个上游历史、大型镜像和构建产物。新增模型可评估 SCons 的 `EXTRAS` 机制，具体集成方式随模型依赖确定。[构建与 EXTRAS 文档](https://www.gem5.org/documentation/general_docs/building)
 
-官方构建文档以 Linux 为主要环境，并定期测试 Ubuntu 22.04 和 24.04。针对当前 Windows 工作区，建议后续评估 WSL2 中的 Ubuntu 24.04，或已有 Linux 主机；这是本项目的环境建议，尚未检查本机 WSL、依赖和硬件资源。编译源码与构建产物优先放 Linux 文件系统，报告和学习笔记可继续放当前项目。
+本报告调研时，官方构建文档以 Linux 为主要环境，并定期测试 Ubuntu 22.04 和 24.04。这里保留 Linux 构建建议；具体执行环境、依赖和资源需按实际使用的电脑核查。编译源码与构建产物可放在执行环境的文件系统中，报告和学习笔记继续由当前项目管理。
 
 以下命令用于说明后续最小起步方式，本轮没有执行下载或构建。应先按官方文档完成 Linux 构建依赖安装，再在选定的工作目录中执行：
 
 ```bash
-git clone --depth 1 --branch v25.1.0.1 https://github.com/gem5/gem5.git upstream/gem5
-git -C upstream/gem5 rev-parse HEAD
-cd upstream/gem5
+git clone --depth 1 --branch v25.1.0.1 https://github.com/gem5/gem5.git gem5-official/gem5
+git -C gem5-official/gem5 rev-parse HEAD
+cd gem5-official/gem5
 scons build/RISCV/gem5.opt -j 2
 ./build/RISCV/gem5.opt -d m5out/memory-linear configs/example/gem5_library/memory_traffic.py LinearGenerator 100
 ./build/RISCV/gem5.opt -d m5out/memory-random configs/example/gem5_library/memory_traffic.py RandomGenerator 100

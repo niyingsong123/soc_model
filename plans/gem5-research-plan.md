@@ -28,7 +28,7 @@
 - 两个配置示例是主要入口：主实验基线中的 `configs/learning_gem5/part1/simple.py` 与 `configs/example/gem5_library/memory_traffic.py`。首先理解它们表达的系统、参数和输入输出。
 - SimObject、EventQueue、Port 的源码作为解释问题的辅助材料，不把两个示例和三个头文件变成必须逐行读完的清单。必要时用短小的事件示例补充解释。
 - CPU 流水线、Cache 一致性协议、DRAM 调度和 SDMA 命令实现，留到相应问题出现后再深入。
-- 使用 [上游登记](../upstream/README.md) 中的固定版本。Bootcamp 保留课程基线；教程接口与主实验基线不一致时，回到对应版本核对。
+- 使用 [上游登记](../gem5-official/README.md) 中的固定版本。Bootcamp 保留课程基线；教程接口与主实验基线不一致时，回到对应版本核对。
 - 阅读记录区分正文阅读、标题或目录浏览、源码选读和实际运行。编译与仿真不作为本阶段资料阅读完成的前提。
 
 ## 完成判断

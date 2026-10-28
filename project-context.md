@@ -1,8 +1,8 @@
 # soc_model 项目上下文
 
-更新日期：2026-10-12。
+更新日期：2026-10-28。
 
-本文件维护研究目标、范围与已采用的推进方式。具体研究顺序与工作阶段分别由 [gem5 研究计划](plans/gem5-research-plan.md)、[项目工作开展计划](plans/project-work-plan.md)维护。工作规则见 [AGENTS.md](AGENTS.md)，实际进展见 [records/PROGRESS.md](records/PROGRESS.md)，版本与下载状态见 [上游登记](upstream/README.md)。
+本文件维护研究目标、范围与已采用的推进方式。具体研究顺序与工作阶段分别由 [gem5 研究计划](plans/gem5-research-plan.md)、[项目工作开展计划](plans/project-work-plan.md)维护。工作规则见 [AGENTS.md](AGENTS.md)，实际进展见 [records/PROGRESS.md](records/PROGRESS.md)，版本与下载状态见 [上游登记](gem5-official/README.md)。
 
 项目文件结构与各类文件的职责见 [项目入口 README](README.md)；六个上游工作树的用途、一、二级子目录说明及版本结构差异，统一保存在 [仓库目录导读](notes/gem5-repository-map.md)。后续目录说明继续在该文档中维护，本文件保留阅读入口。
 
@@ -19,7 +19,7 @@
 
 ## 已采用的推进方式
 
-- 以官方固定 release 的完整源码树作为起点，保留提交历史并按主题选读；源码基线唯一登记在 `upstream/README.md`。
+- 以官方固定 release 的完整源码树作为起点，保留提交历史并按主题选读；源码基线唯一登记在 `gem5-official/README.md`。
 - 已选择完整获取 gem5、Bootcamp 2024、website 和 gem5-resources 四个仓库，并保留 Bootcamp 父仓库固定的子模块版本。仓库内已提交的材料一并保留；另行分发的 workload、镜像和容器按实际实验需要获取。
 - 采用“研究项目外层 + 官方仓库内层”的组织方式：官方文件结构原样保留，外部新增模型通过 `EXTRAS` 接入，Python 配置通过 gem5 脚本入口接入，实际输出由 `--outdir` 放入独立运行目录。
 - 配套学习材料优先选择官方 Bootcamp、官网文档和固定版本示例。教程与基线存在差异时，以当前所用版本的实际接口和行为为准。
@@ -27,7 +27,7 @@
 - 早期保留独立的 Garnet NoC 学习支线，研究 VC、credit、仲裁、Buffer 和反压，接续原 ChatGPT 对话中的 Switch 学习建议。
 - 自建 DMA 模型从请求粒度、outstanding、FIFO、读写重叠和反压起步；官方 `SDMAEngine` 用于理解现有流程，并在审查其时序与功能范围后决定复用方式。
 - 根据研究问题逐步接入翻译、共享 Cache、互连和多通道内存。图中每一条连接都有建模依据，不预设所有目标模块串成一条固定路径。
-- 倾向在 Linux 环境中构建和仿真；当前 Windows 项目可以配合 WSL2 或 Linux 主机。具体运行环境和资源配置经实际核查后记录。
+- 倾向在 Linux 环境中构建和仿真；具体执行环境与资源配置按使用的电脑重新核查。项目同步不包含上游源码、已安装软件和构建产物，也不继承其他电脑的运行验收结果。
 
 这些决定组织后续工作；实际获取、检查、构建和运行状态以进度记录及上游登记为准，不能从路线推断某项工作已经完成。
 

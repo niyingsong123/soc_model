@@ -46,7 +46,7 @@ scons build/RISCV/gem5.opt EXTRAS="$SOC_MODEL_ROOT/models" -j 2
   "$SOC_MODEL_ROOT/experiments/E001-<topic>/run.py"
 ```
 
-接口依据：[官方 EXTRAS 说明](https://www.gem5.org/documentation/general_docs/building/EXTRAS)、本地选定版本的 `SConstruct`（EXTRAS 解析）、`src/SConscript`（外部源码遍历）和 `src/python/m5/main.py`（`--path`、`--outdir`、脚本执行）。确切源码基线见 [上游登记](../upstream/README.md)。这些源码核对不等同于本项目外部模型已完成编译验证。
+接口依据：[官方 EXTRAS 说明](https://www.gem5.org/documentation/general_docs/building/EXTRAS)、选定版本的 `SConstruct`（EXTRAS 解析）、`src/SConscript`（外部源码遍历）和 `src/python/m5/main.py`（`--path`、`--outdir`、脚本执行）。确切源码基线与当前获取状态见 [上游登记](../gem5-official/README.md)。这些源码核对不等同于当前电脑已有源码或本项目外部模型已完成编译验证。
 
 ## 一个实验正文应能回答的问题
 

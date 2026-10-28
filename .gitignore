@@ -1,8 +1,8 @@
 # Official gem5 source, documentation, tutorials and resources stay local,
 # including the Bootcamp submodules and each checkout's Git history.
-# Sync only this project's source/version registry from upstream/.
-/upstream/*
-!/upstream/README.md
+# Sync only this project's source/version registry from gem5-official/.
+/gem5-official/*
+!/gem5-official/README.md
 
 # Project-authored source files, documents, build scripts, configs,
 # experiments, tools, patches and selected evidence are eligible for sync

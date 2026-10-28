@@ -10,21 +10,21 @@
 | [project-context.md](project-context.md) | 项目目标、范围、跨项目关系与已采用的研究方式 | 判断一个任务是否符合项目方向；研究方向改变时更新 |
 | [plans/gem5-research-plan.md](plans/gem5-research-plan.md) | gem5 整体认识的研究范围、顺序、阅读边界和完成标准 | 确定资料与少量源码的学习内容 |
 | [plans/project-work-plan.md](plans/project-work-plan.md) | 面向 SoC/SDMA 的工作阶段、推进方式与实验接续 | 确定怎样通过模型和实验实现项目目标 |
-| [upstream/README.md](upstream/README.md) | 上游仓库、下载范围、选定版本、本地获取状态 | 下载、升级、复现或定位源码时使用 |
+| [gem5-official/README.md](gem5-official/README.md) | 上游仓库、下载范围、选定版本、本地获取状态 | 下载、升级、复现或定位源码时使用 |
 | [methods/experiment-workflow.md](methods/experiment-workflow.md) | 模型与实验组织方法、运行记录和结论验证要求 | 开始编写模型、运行实验或整理性能结论时使用 |
 | [records/PROGRESS.md](records/PROGRESS.md) | 当前阶段、已完成工作、未完成事项与下一步 | 接续任务；发生实际进展时更新 |
-| [.local/environment.md](.local/environment.md) | 本机 WSL、Linux 用户、构建选项、运行路径与验收记录 | 在本机启动、重建或诊断环境时使用；不纳入 Git |
-| [.local/installed-software.md](.local/installed-software.md) | 本项目安装的软件、完整依赖清单、系统组件改动与未来清理归属 | 安装或升级后登记；以后卸载、迁移或核对残留时使用；不纳入 Git |
+| `.local/environment.md`（本机文件） | 当前电脑的环境检查、实际安装与运行状态 | 在当前电脑建立并维护；不纳入 Git，也不随仓库同步 |
+| `.local/installed-software.md`（安装后建立） | 当前电脑为本项目安装的软件、依赖与清理归属 | 实际安装或升级后登记；不纳入 Git |
 | [records/WORKING_NOTES.md](records/WORKING_NOTES.md) | 当前整体认识的研究所得与待讨论问题 | 继续补充同一份工作笔记；正式组织另行讨论 |
 | [E001 注入率实验](experiments/E001-injection-rate/README.md) | 首个性能问题的配置、参数、统计口径与验证方法 | Linux 就绪后开展真实运行；当前只有准备成果 |
 | [gem5-official-repo-report.md](gem5-official-repo-report.md) | 2026-10-11 的官方仓库调研、源码阅读入口及建议依据 | 了解现有组件、下载理由和 SDMA 模型边界 |
-| [notes/gem5-repository-map.md](notes/gem5-repository-map.md) | 六个本地工作树的用途、一二级目录职责与版本结构差异 | 查找课程、源码、文档和 workload 的阅读入口 |
+| [notes/gem5-repository-map.md](notes/gem5-repository-map.md) | 六个固定版本工作树的用途、一二级目录职责与版本结构差异 | 查找课程、源码、文档和 workload 的阅读入口 |
 
 项目上下文说明“为什么研究、范围是什么”；两份计划分别说明“先研究什么”与“怎样开展工作”；AGENTS 说明“怎样协作和判断完成”；进度记录说明“实际做到哪里”。版本与下载状态放上游登记，研究所得放工作笔记，实验结论放对应实验，避免在多个管理文件中反复维护同一事实。
 
 ## 目录组织
 
-根文件、两份计划、四个上游仓库、Bootcamp 的固定版本子模块、研究笔记、实验方法和进度记录已经建立。E001 已有配置与实验说明，尚未运行。版本、校验和 Windows 兼容性例外统一见 [上游登记](upstream/README.md)；标为“按需建立”的部分在有实际内容时创建。既有仓库报告保留原路径，后续专题笔记进入 `notes/`。
+当前 checkout 已有项目文档、两份计划、研究笔记、实验方法和 E001 配置；E001 尚未运行。上游源码与构建产物不随本仓库同步，当前 Mac 尚未安装 gem5 环境；各项依赖的固定版本与获取状态见 [上游登记](gem5-official/README.md)。下图同时展示已有文件和计划位置，标为“待获取”或“按需建立”的部分尚未就绪。既有仓库报告保留原路径，后续专题笔记进入 `notes/`。
 
 ```text
 soc_model/
@@ -36,12 +36,12 @@ soc_model/
   plans/
     gem5-research-plan.md          gem5 整体认识的研究计划
     project-work-plan.md           面向项目目标的工作开展计划
-  upstream/
+  gem5-official/
     README.md
-    gem5/                         官方主实验基线，保留原目录结构
-    gem5-bootcamp-2024/            完整教学材料及教程固定版本子模块
-    gem5-website/                  完整官方文档仓库
-    gem5-resources/                完整 workload 源码仓库
+    gem5/                         待获取：官方主实验基线，保留原目录结构
+    gem5-bootcamp-2024/            待获取：教学材料及教程固定版本子模块
+    gem5-website/                  待获取：官方文档仓库
+    gem5-resources/                待获取：workload 源码仓库
   methods/
     experiment-workflow.md
   records/
@@ -62,13 +62,12 @@ soc_model/
   runs/<experiment-id>/<run-id>/  按需建立：一次运行的原始输出
   .local/
     backups/                      本地文档备份
-    environment.md                本机路径、已核查环境与兼容性说明
-    installed-software.md         软件安装与未来清理台账
-    software-inventory/           带日期的软件包及 Windows 安装身份快照
-    acquisition/                  实际获取日志、检查脚本与验证记录
+    environment.md                当前电脑的环境检查与实际安装状态
+    installed-software.md         实际安装后建立：软件与清理台账
+    acquisition/                  实际获取依赖后建立：下载与验证记录
 ```
 
-`<run-id>` 是命名示意。WSL 中已产生独立的 `runs/environment-check/<run-id>/` 环境验收输出，实际位置与启动方法见 [本机环境](.local/environment.md)。E001 参数扫描仍未运行；环境检查不等于已实现自建模型或完成性能研究。
+`<run-id>` 是命名示意。当前 Mac 尚无 gem5 环境验收或仿真输出；以后实际运行时再建立对应目录并登记结果。
 
 ## 内容放在哪里
 
@@ -86,7 +85,7 @@ soc_model/
 | 上游源码修改 | `patches/<repository>/` 或已登记的可访问开发分支 | 必须能从记录的基线重放；保留顺序和应用说明 |
 | 本机绝对路径、临时副本、受限输入、旧稿备份 | `.local/` | 本地保留；受限输入的派生内容继续遵守原有范围 |
 
-Linux/WSL 中的源码和运行输出可以放在 Linux 文件系统中的实际工作目录，避免为了目录外观强制放进 Windows 磁盘。逻辑职责仍按上表，实际位置记录在 `.local/environment.md`；上游登记和实验记录保留足够的定位信息。当前根目录为 `E:\codex\soc_model`。
+源码和运行输出可以按实际执行环境放在合适的文件系统中，逻辑职责仍按上表。电脑的绝对路径、安装信息与运行入口只记录在该电脑的 `.local/environment.md`；共享文档使用相对路径或明确的占位变量。换电脑后重新核查依赖与运行状态，不沿用其他电脑的安装或验收结论。
 
 ## 官方源码与本项目怎样连接
 
@@ -118,13 +117,13 @@ Linux/WSL 中的源码和运行输出可以放在 Linux 文件系统中的实际
 | --- | --- | --- |
 | 项目约定、上下文、研究报告、计划、笔记和进度 | 是 | 包括根目录文档及 `methods/`、`notes/`、`plans/`、`records/` 中的项目文件 |
 | 自建模型、系统配置、实验代码、小型自建输入与选定证据 | 是 | 包括 `experiments/`，以及实际建立后的 `models/`、`configs/`、`tools/`、`patches/`；尚未建立的目录不预建 |
-| 上游来源与版本登记 | 是 | 保留本项目编写的 [upstream/README.md](upstream/README.md)，供其他机器按固定版本取得依赖 |
-| 官方仓库及其内部 Git 历史 | 否 | 排除 `upstream/gem5/`、`upstream/gem5-bootcamp-2024/`、`upstream/gem5-website/`、`upstream/gem5-resources/`；课程中的两个子模块随父目录一起排除 |
+| 上游来源与版本登记 | 是 | 保留本项目编写的 [gem5-official/README.md](gem5-official/README.md)，供其他机器按固定版本取得依赖 |
+| 官方仓库及其内部 Git 历史 | 否 | 排除 `gem5-official/gem5/`、`gem5-official/gem5-bootcamp-2024/`、`gem5-official/gem5-website/`、`gem5-official/gem5-resources/`；课程中的两个子模块随父目录一起排除 |
 | 下载资源、原始运行输出、构建产物、虚拟环境与缓存 | 否 | 忽略任意层级的 `build/`、CMake 构建目录与生成文件、SCons/Ninja 元数据、对象文件、编译后的库与可执行文件；实际引入资源时，允许同步 `resources/README.md` 登记文件；支撑结论的选定小型证据放对应实验的 `evidence/` |
 | 本机记录、安装日志和旧稿备份 | 否 | `.local/` 继续仅在本地保留 |
 
-除上述忽略范围外，新增项目源文件默认可以纳入 Git，不限于当前已有目录；C++/Python 源码、文档、配置、输入、`SConstruct`、`SConscript`、`CMakeLists.txt`、`Makefile` 和手写 `*.cmake` 文件均保留同步资格。不按 `*.txt`、`*.json`、`*.ini` 或 `*.log` 一概忽略，以保留源配置与选定实验依据。官方工作树整目录排除，包括其中源码、隐藏文件、生成物及内部 Git 元数据；`upstream/README.md` 是本项目编写的登记文件，继续同步。
+除上述忽略范围外，新增项目源文件默认可以纳入 Git，不限于当前已有目录；C++/Python 源码、文档、配置、输入、`SConstruct`、`SConscript`、`CMakeLists.txt`、`Makefile` 和手写 `*.cmake` 文件均保留同步资格。不按 `*.txt`、`*.json`、`*.ini` 或 `*.log` 一概忽略，以保留源配置与选定实验依据。官方工作树整目录排除，包括其中源码、隐藏文件、生成物及内部 Git 元数据；`gem5-official/README.md` 是本项目编写的登记文件，继续同步。
 
 实际同步仍需将新增文件加入版本管理、提交并推送；本项目已配置独立的 GitHub `origin` 和 `main` 跟踪分支，上游仓库自己的 `origin` 不代表本项目的远端。外部文件的许可与来源项目的保护范围继续适用。
 
-在其他机器取得本项目后，按 [上游登记](upstream/README.md) 单独获取官方依赖。官方源码路径的本地链接需要依赖到位后才能使用。已完成的 Git 配置、检查与远端同步状态见 [当前进度](records/PROGRESS.md)，不根据文件存在或忽略规则推断已上传。
+在其他机器取得本项目后，按 [上游登记](gem5-official/README.md) 单独获取官方依赖。官方源码路径的本地链接需要依赖到位后才能使用。已完成的 Git 配置、检查与远端同步状态见 [当前进度](records/PROGRESS.md)，不根据文件存在或忽略规则推断已上传。
