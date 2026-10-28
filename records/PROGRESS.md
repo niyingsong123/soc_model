@@ -1,6 +1,6 @@
 # 项目进度与接续
 
-更新日期：2026-10-25。
+更新日期：2026-10-28。
 
 ## 当前状态
 
@@ -13,7 +13,7 @@
 | 读取此前 ChatGPT gem5 专题对话 | 已完成 | [项目上下文](../project-context.md) |
 | 官方仓库、代表性源码与下载范围调研 | 已完成 | [仓库报告](../gem5-official-repo-report.md) |
 | 项目目标、协作规则和文件职责整理 | 已完成 | [README](../README.md)、[AGENTS](../AGENTS.md) |
-| 项目 Git 与 GitHub 同步范围 | 外层 `main` 已提交并上传 14 个自有文件，`origin/main` 跟踪已建立；GitHub API 已独立核对首次提交；六个官方工作树、本机记录及生成物继续排除 | [版本管理范围](../README.md#版本管理范围)、[GitHub 仓库](https://github.com/niyingsong123/soc_model) |
+| 项目 Git 与 GitHub 同步范围 | 外层 `main` 已同步 14 个自有文件并跟踪 `origin/main`；自有源文件默认可纳入，已补齐嵌套构建目录及常见编译产物的忽略规则；六个官方工作树全部文件、本机记录及生成物继续排除 | [版本管理范围](../README.md#版本管理范围)、[GitHub 仓库](https://github.com/niyingsong123/soc_model) |
 | 四个官方仓库及教程子模块获取 | 已完成，固定版本与完整性检查通过；保留 Windows 兼容性说明 | [上游登记](../upstream/README.md) |
 | 六个工作树用途及一、二级目录分析 | 已完成，覆盖全部 301 个目录条目，共同结构合并说明并标明适用副本 | [目录导读](../notes/gem5-repository-map.md) |
 | 两份独立计划 | 已分别保存初稿与后续建议的整合稿，并接入项目入口 | [研究计划](../plans/gem5-research-plan.md)、[工作计划](../plans/project-work-plan.md) |
@@ -35,6 +35,14 @@
 本轮完成环境搭建与验收，没有自动启动 E001 参数扫描。outstanding、简单 SoC、NoC、DMA/SDMA 等仍按工作计划接续。
 
 ## 已完成记录
+
+### 2026-10-28 源文件同步范围与官方仓库全量忽略
+
+按用户要求，明确自有源文件、文档、配置、构建脚本和选定实验依据默认可纳入 Git，不限定已有目录。官方 gem5、Bootcamp、website、resources 及课程内两个子模块继续整目录忽略，包括源码、隐藏文件和内部 Git 元数据；本项目编写的 `upstream/README.md` 继续同步。完整规则见 [版本管理范围](../README.md#版本管理范围)。
+
+将只匹配根目录的 `/build/` 调整为任意层级的 `build/`，补充 CMake 构建目录与生成文件、SCons/Ninja 元数据、编译对象、库、可执行文件和预编译头的忽略规则。保留 `SConstruct`、`SConscript`、`CMakeLists.txt`、`Makefile`、手写 `*.cmake` 及源配置的同步资格；本机记录、备份、下载资源与原始运行输出沿用既定本地保留范围。
+
+已通过实际 Git 规则检查六个官方工作树的全部 66,491 个版本化文件，以及 30 个内部 Git 元数据和后续新增文件路径样例，均被忽略；28 个源文件样例可纳入，38 个生成物和 6 个既定本地路径样例被排除。当前 14 个跟踪文件均未命中忽略规则，无官方文件或生成物需要移出索引；没有修改或删除官方源码，也没有执行编译或仿真。检查记录位于 `.local/validation/20261028-git-source-scope/checks.json`，修改前的 3 份旧稿和 SHA256 清单位于 `.local/backups/20261028-git-source-scope/`。
 
 ### 2026-10-25 项目自有文件首次同步到 GitHub
 

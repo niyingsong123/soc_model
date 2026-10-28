@@ -4,8 +4,9 @@
 /upstream/*
 !/upstream/README.md
 
-# Other project-authored documents, models, configs, experiments, tools and
-# patches are eligible for Git/GitHub sync unless excluded below.
+# Project-authored source files, documents, build scripts, configs,
+# experiments, tools, patches and selected evidence are eligible for sync
+# by default. Do not restrict them to a fixed list of existing directories.
 
 # Downloaded binaries, kernels, disk images and checkpoints.
 # Create this registry only when resources are actually introduced.
@@ -16,10 +17,45 @@
 /runs/
 /.local/
 **/m5out/
-/build/
+
+# Build outputs at any depth. Keep SConstruct, SConscript, CMakeLists.txt,
+# Makefile and authored *.cmake files eligible for version control.
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+install_manifest.txt
+compile_commands.json
+.sconsign
+.sconsign*.dblite
+.sconf_temp/
+.ninja_deps
+.ninja_log
+
+# Compiled objects, libraries, executables and debug/linker outputs.
+*.o
+*.os
+*.obj
+*.lo
+*.a
+*.lib
+*.so
+*.so.[0-9]*
+*.dylib
+*.dll
+*.exe
+*.pdb
+*.ilk
+*.pch
+*.gch
+gem5.debug
+gem5.opt
+gem5.fast
 
 # Python environments, bytecode and notebook cache.
-/.venv/
+.venv/
 **/__pycache__/
 *.py[cod]
 **/.ipynb_checkpoints/

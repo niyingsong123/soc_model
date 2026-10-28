@@ -120,9 +120,11 @@ Linux/WSL 中的源码和运行输出可以放在 Linux 文件系统中的实际
 | 自建模型、系统配置、实验代码、小型自建输入与选定证据 | 是 | 包括 `experiments/`，以及实际建立后的 `models/`、`configs/`、`tools/`、`patches/`；尚未建立的目录不预建 |
 | 上游来源与版本登记 | 是 | 保留本项目编写的 [upstream/README.md](upstream/README.md)，供其他机器按固定版本取得依赖 |
 | 官方仓库及其内部 Git 历史 | 否 | 排除 `upstream/gem5/`、`upstream/gem5-bootcamp-2024/`、`upstream/gem5-website/`、`upstream/gem5-resources/`；课程中的两个子模块随父目录一起排除 |
-| 下载资源、原始运行输出、构建产物、虚拟环境与缓存 | 否 | 延续现有忽略规则；实际引入资源时，允许同步 `resources/README.md` 登记文件；支撑结论的选定小型证据放对应实验的 `evidence/` |
+| 下载资源、原始运行输出、构建产物、虚拟环境与缓存 | 否 | 忽略任意层级的 `build/`、CMake 构建目录与生成文件、SCons/Ninja 元数据、对象文件、编译后的库与可执行文件；实际引入资源时，允许同步 `resources/README.md` 登记文件；支撑结论的选定小型证据放对应实验的 `evidence/` |
 | 本机记录、安装日志和旧稿备份 | 否 | `.local/` 继续仅在本地保留 |
 
-除上述忽略范围外，新增项目文件默认可以纳入 Git；实际同步需要将文件加入版本管理、提交，并配置本项目的 GitHub 远端。上游仓库自己的 `origin` 不代表本项目的远端。外部文件的许可与来源项目的保护范围继续适用。
+除上述忽略范围外，新增项目源文件默认可以纳入 Git，不限于当前已有目录；C++/Python 源码、文档、配置、输入、`SConstruct`、`SConscript`、`CMakeLists.txt`、`Makefile` 和手写 `*.cmake` 文件均保留同步资格。不按 `*.txt`、`*.json`、`*.ini` 或 `*.log` 一概忽略，以保留源配置与选定实验依据。官方工作树整目录排除，包括其中源码、隐藏文件、生成物及内部 Git 元数据；`upstream/README.md` 是本项目编写的登记文件，继续同步。
+
+实际同步仍需将新增文件加入版本管理、提交并推送；本项目已配置独立的 GitHub `origin` 和 `main` 跟踪分支，上游仓库自己的 `origin` 不代表本项目的远端。外部文件的许可与来源项目的保护范围继续适用。
 
 在其他机器取得本项目后，按 [上游登记](upstream/README.md) 单独获取官方依赖。官方源码路径的本地链接需要依赖到位后才能使用。已完成的 Git 配置、检查与远端同步状态见 [当前进度](records/PROGRESS.md)，不根据文件存在或忽略规则推断已上传。
